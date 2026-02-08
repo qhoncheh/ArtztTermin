@@ -4,7 +4,7 @@ const Navbar = () => {
   return (
     <>
       <div className={navbarStyles.navbarBorder}>heee</div>
-      <nav>eeeeeee</nav>
+      <nav></nav>
 
     </>
   );
