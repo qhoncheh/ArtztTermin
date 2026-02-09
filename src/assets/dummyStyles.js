@@ -632,8 +632,8 @@ export const navbarStyles = {
   doctorAdminButton: "btn-add hidden lg:inline-flex items-center gap-2 px-3 py-2 rounded-full text-sm font-semibold transition-transform duration-200",
   doctorAdminIcon: "w-4 h-4",
   doctorAdminText: "hidden lg:text-xs lg:whitespace-nowrap sm:inline-block",
-  loginButton: "btn-login hidden lg:flex lg:text-sm items-center gap-2 bg-linear-to-r from-emerald-400 to-green-600 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-xl transition-all duration-300 cursor-default",
-  loginIcon: "w-4 h-4",
+  loginButton: "btn-login cursor-pointer hidden lg:flex lg:text-sm items-center gap-2 bg-linear-to-r from-emerald-400 to-green-600 text-white px-6 py-2.5 rounded-full font-semibold hover:shadow-xl transition-all duration-300 cursor-default",
+  loginIcon: "w-4 h-",
   
   // Mobile toggle
   mobileToggle: "lg:hidden p-2.5 rounded-lg hover:bg-emerald-50 transition-colors",
