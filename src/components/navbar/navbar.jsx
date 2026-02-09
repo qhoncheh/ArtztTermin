@@ -2,13 +2,13 @@ import { useState } from "react";
 import { navbarStyles } from "../../assets/dummyStyles";
 import { useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useClerk } from "@clerk/clerk-react";
+import { SignedOut, useClerk } from "@clerk/clerk-react";
 import logo from "../../assets/logo.png";
+import { Key, User } from "lucide-react";
 
 const STORAGE_KEY = "doctorToken_v1";
 
 const Navbar = () => {
-
   const [isOpen, setIsOpen] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -23,33 +23,82 @@ const Navbar = () => {
   const navRef = useRef(null);
   const clerk = useClerk();
   const navigate = useNavigate();
+
+  const navItems = [
+    { label: "Startseite", href: "/" },
+    { label: "Ärzte", href: "/doctors" },
+    { label: "Leistungen", href: "/services" },
+    { label: "Termine", href: "/appointments" },
+    { label: "Kontakt", href: "/contact" },
+  ];
+
   return (
-    <> 
-      <div className={navbarStyles.navbarBorder}>heee</div>
-      <nav className={`${navbarStyles.navbarContainer} 
-        ${showNavbar ? navbarStyles.navbarVisible : navbarStyles.navbarHidden}`} ref={navRef}
+    <>
+      <div className={navbarStyles.navbarBorder}></div>
+      <nav
+        className={`${navbarStyles.navbarContainer} 
+          ${showNavbar ? navbarStyles.navbarVisible : navbarStyles.navbarHidden}`}
+        ref={navRef}
       >
-      <div className={navbarStyles.contentWrapper}>
-        <div className={navbarStyles.flexContainer}>
-          /* Logo */
-          <Link to="/" className={navbarStyles.logoLink}>
-            <div className={navbarStyles.logoContainer}>
-              <div className={navbarStyles.logoImageWrapper}>
-                <img
-                  src={logo}
-                  alt="Artzt bild"
-                  className={navbarStyles.logoImage}
-                />
+        <div className={navbarStyles.contentWrapper}>
+          <div className={navbarStyles.flexContainer}>
+            {/* Logo */}
+            <Link to="/" className={navbarStyles.logoLink}>
+              <div className={navbarStyles.logoContainer}>
+                <div className={navbarStyles.logoImageWrapper}>
+                  <img
+                    src={logo}
+                    alt="Artzt bild"
+                    className={navbarStyles.logoImage}
+                  />
+                </div>
               </div>
-              <span className={navbarStyles.logoText}>Doctor</span>
+              <div className={navbarStyles.logoTextContainer}>
+                <h1 className={navbarStyles.logoTitle}>Medicare</h1>
+                <p className={navbarStyles.logoSubtitle}>Gesundheitslösungen</p>
+              </div>
+            </Link>
+            <div className={navbarStyles.desktopNav}>
+              <div className={navbarStyles.navItemsContainer}>
+                {navItems.map((item) => {
+                  const isActive = location.pathname === item.href;
+                  return (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      className={`${navbarStyles.navItem} ${
+                        isActive
+                          ? navbarStyles.navItemActive
+                          : navbarStyles.navItemInactive
+                      }`}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
-          </Link>
+            <div className={navbarStyles.rightContainer}>
+              <SignedOut>
+                <Link
+                  to="/doctor-admin/login"
+                  className={navbarStyles.doctorAdminButton}
+                >
+                  <User className={navbarStyles.doctorAdminIcon} />
+                  <span className={navbarStyles.doctorAdminText}>
+                    Arztverwaltung
+                  </span>
+                </Link>
+                <button
+                  onClick={() => clerk.openSignIn()}
+                  className={navbarStyles.loginButton}
+                >
+                  <Key className={navbarStyles.loginIcon}/>
+                </button>
+              </SignedOut>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className={navbarStyles.navLinksContainer}>
-      </div>
-
       </nav>
     </>
   );
