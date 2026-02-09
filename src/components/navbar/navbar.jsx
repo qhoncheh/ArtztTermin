@@ -126,11 +126,11 @@ const Navbar = () => {
           {/* mobile navigation  */}
           {isOpen && (
             <div className={navbarStyles.mobileMenu}>
-              {navItems.map((item) => {
+              {navItems.map((item,index) => {
                 const isActive = location.pathname === item.href;
                 return (
                   <Link
-                    key={item.href}
+                    key={index}
                     to={item.href}
                     onClick={() => setIsOpen(false)}
                     className={`${navbarStyles.mobileMenuItem} ${
@@ -143,7 +143,7 @@ const Navbar = () => {
                   </Link>
                 );
               })}
-              <SignInButton>
+              <SignedOut>
                 <Link
                   to="/doctor-admin/login"
                   className={navbarStyles.mobileDoctorAdminButton}
@@ -160,10 +160,13 @@ const Navbar = () => {
                     className={navbarStyles.mobileLoginButton}
                   >Anmelden</button>
                 </div>
-              </SignInButton>
+              </SignedOut>
             </div>
           )}
         </div>
+        <style>
+          {navbarStyles.animationStyles}
+        </style>
       </nav>
     </>
   );
